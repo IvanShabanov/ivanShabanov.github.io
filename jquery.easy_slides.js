@@ -119,7 +119,7 @@ Usage:
               EasySlidesNext(cur_slider);
       });
       if (settings['mouseevents']) {
-        $(this_slider).bind('mousemove, touchmove', function(e) {
+        $(this_slider).bind('mousemove touchstart touchmove touchend touchcancel', function(e) {
           if (e.buttons > 0) {
             if (!mousedowned) {
               //Первое нажатие на кнопку мыши 
