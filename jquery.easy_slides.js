@@ -119,7 +119,7 @@ Usage:
               EasySlidesNext(cur_slider);
       });
       if (settings['mouseevents']) {
-        $(this_slider).bind('mousemove', function(e) {
+        $(this_slider).bind('mousemove, touchmove', function(e) {
           if (e.buttons > 0) {
             if (!mousedowned) {
               //Первое нажатие на кнопку мыши 
@@ -144,7 +144,7 @@ Usage:
               if (settings['reverse']) {
                 d = -d;
               }    
-              if (Math.abs(d) > (0.5 * p0.width)) {
+              if ((Math.abs(d) > (0.5 * p0.width)) or (Math.abs(d) > 50) {
                 $(this).data('posstart' , { 
                               x: e.pageX, 
                               y: e.pageY, 
