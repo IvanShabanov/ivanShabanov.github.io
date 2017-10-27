@@ -144,7 +144,7 @@ Usage:
               if (settings['reverse']) {
                 d = -d;
               }    
-              if ((Math.abs(d) > (0.5 * p0.width)) or (Math.abs(d) > 50) {
+              if ((Math.abs(d) > (0.5 * p0.width)) || (Math.abs(d) > 50)) {
                 $(this).data('posstart' , { 
                               x: e.pageX, 
                               y: e.pageY, 
@@ -173,7 +173,7 @@ Usage:
                 d = -d;
               }    
               $(this).removeData('posstart');              
-              if ((Math.abs(d) > (0.5 * p0.width)) or (Math.abs(d) > 50) {
+              if ((Math.abs(d) > (0.5 * p0.width)) || (Math.abs(d) > 50)) {
                 if (d > 0) {
                   cur_slider --;
                 } else {
