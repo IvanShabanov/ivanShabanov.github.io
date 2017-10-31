@@ -1,3 +1,4 @@
+<!DOCTYPE html>
 <html>
 <head>
 <title>Examples Easy Silder</title>
@@ -10,50 +11,57 @@
 
  <h2>One Big Picture</h2>
  <div class="slider_one_big_picture">
-  <div>slide1</div>
-  <div>slide2</div>
-  <div>slide3</div>
-  <div>slide4</div>
-  <div>slide5</div>
-  <div>slide6</div>
-  <div>slide7</div>
-  <div>slide8</div>
-  <div>slide9</div>
+  <div class="slide">1</div>
+  <div class="slide">2</div>
+  <div class="slide">3</div>
+  <div class="slide">4</div>
+  <div class="slide">5</div>
+  <div class="slide">6</div>
+  <div class="slide">7</div>
+  <div class="slide">8</div>
+  <div class="slide">9</div>
   <div class="next_button">NEXT</div>  
   <div class="prev_button">PREV</div>  
+  <div class="nav_indicators"></div>
  </div>
 
  <h2>Circle</h2>
  <div class="slider_circle_10">
-  <div>slide1</div>
-  <div>slide2</div>
-  <div>slide3</div>
-  <div>slide4</div>
-  <div>slide5</div>
-  <div>slide6</div>
-  <div>slide7</div>
-  <div>slide8</div>
-  <div>slide9</div>
+  <div class="slide">1</div>
+  <div class="slide">2</div>
+  <div class="slide">3</div>
+  <div class="slide">4</div>
+  <div class="slide">5</div>
+  <div class="slide">6</div>
+  <div class="slide">7</div>
+  <div class="slide">8</div>
+  <div class="slide">9</div>
   <div class="next_button">NEXT</div>  
   <div class="prev_button">PREV</div>  
  </div>
 
+ <h2>4 in line</h2>
+ <div class="slider_four_in_line">
+  <div class="slide">1</div>
+  <div class="slide">2</div>
+  <div class="slide">3</div>
+  <div class="slide">4</div>
+  <div class="slide">5</div>
+  <div class="slide">6</div>
+  <div class="slide">7</div>
+  <div class="slide">8</div>
+  <div class="slide">9</div>
+  <div class="next_button">NEXT</div>  
+  <div class="prev_button">PREV</div>  
+ </div>
+ 
+ <br>
+  <br> <br> <br> <br> <br> <br>
  <script>
    $(document).ready(function() {
-
-     $('.slider_one_big_picture').EasySlides({'autoplay': true, 'timeout':3000, 'show': 5})
-     $('.slider_circle_10').EasySlides({'autoplay': true, 'timeout':3000, 'show': 13})
-
-     var style = {
-      'box-shadow': '0px 1px 3px #000',
-      'border': '1px solid #000',
-      'background': '#fff',
-      'text-align': 'center'
-      }
-     $('.slider_one_big_picture > div').css(style);
-     $('.slider_circle_10 > div').css(style);
-
-
+     $('.slider_one_big_picture').EasySlides({'autoplay': true,'stepbystep':false, 'show': 5})
+     $('.slider_circle_10').EasySlides({'autoplay': true, 'show': 13})
+     $('.slider_four_in_line').EasySlides({'autoplay': true, 'show': 9})
    });
  </script>
 </body>
