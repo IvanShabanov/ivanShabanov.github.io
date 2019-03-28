@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Test EasyForm</title>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <script src='//yastatic.net/jquery/3.3.1/jquery.min.js' type='text/javascript'></script>
+</head>
+<style>
+    .point {
+        width: 10px;
+        height: 10px;
+        margin-left: -5px;
+        margin-top: -5px;
+        border-radius: 50% 50%;
+        background: #000;
+        position: absolute;
+    }
+
+    body {
+        width: 100vw;
+        height: 100vh;
+    }
+</style>
+
+<body>
+    <script>
+
+        var point = [];
+        var calculation = false;
+        var pause = true;
+        var newpoint;
+        var addpoint = false;
+        function AddPoint(x, y) {
+            var apoint = {
+                'x': x,
+                'y': y,
+                'speed_x': 0,
+                'speed_y': 0,
+            };
+            return apoint;
+        };
+        function CorrectSpeed(current, x, y) {
+            for (var i = 0; i < point.length; i++) {
+                if (current != i) {
+                    var direction_x = -0.01;
+                    var direction_y = -0.01;
+                    if (x > point[i]['x']) {
+                        direction_x = 0.01;
+                    };
+                    if (y > point[i]['y']) {
+                        direction_y = 0.01;
+                    }
+                    if (Math.round(x) == Math.round(point[i]['x'])) {
+                        direction_x = 0;
+                    };
+                    if (Math.round(y) == Math.round(point[i]['y'])) {
+                        direction_y = 0;
+                    }
+                    point[i]['speed_x'] += direction_x;
+                    point[i]['speed_y'] += direction_y;
+                    if ((direction_x == 0) && (direction_y == 0)) {
+                        if ((Math.abs(point[i]['speed_x']) + Math.abs(point[current]['speed_x'])) >
+                            (Math.abs(point[i]['speed_y']) + Math.abs(point[current]['speed_y']))) {
+                            point[i]['speed_x'] = -point[i]['speed_x'];
+                            point[current]['speed_x'] = -point[current]['speed_x'];
+                        } else {
+                            point[i]['speed_y'] = -point[i]['speed_y'];
+                            point[current]['speed_y'] = -point[current]['speed_y'];
+                        };
+                    };
+
+                };
+            };
+        };
+        function gravity() {
+            if (!calculation) {
+                calculation = true;
+                if (!pause) {
+                    for (var i = 0; i < point.length; i++) {
+                        CorrectSpeed(i, point[i]['x'], point[i]['y']);
+                    };
+                    for (var i = 0; i < point.length; i++) {
+                        point[i]['x'] += point[i]['speed_x'];
+                        point[i]['y'] += point[i]['speed_y'];
+                    };
+                };
+                for (var i = 0; i < point.length; i++) {
+                    $('#point' + i).css({ 'top': point[i]['y'], 'left': point[i]['x'] });
+                };
+                setTimeout(function () { gravity(); }, 100);
+                calculation = false;
+                if (addpoint) {
+                    var newi = point.length;
+                    var color = 'rgb(';
+                    var segment_r = $('body').width() / 10;
+                    var segment_g = $('body').height() / 10;
+                    var segment_b = ($('body').height() + $('body').width()) / 10;
+                    segment_r = Math.round(newpoint['x'] / segment_r) * 25;
+                    segment_g = Math.round(newpoint['y'] / segment_g) * 25;
+                    segment_b = Math.round((newpoint['x'] + newpoint['y']) / segment_b);
+                    color += '' + segment_r + ', ' + segment_g + ', ' + segment_b;
+                    color += ')';
+                    point[newi] = newpoint;
+                    addpoint = false;
+
+                    $('body').append('<div id="point' + newi + '" class="point" style="background: ' + color + ';"></div>');
+                }
+            };
+        };
+
+        $(document).ready(function () {
+            $('body').click(function (event) {
+                newpoint = AddPoint(event.pageX, event.pageY);
+                addpoint = true;
+            });
+            $('body').keypress(function (event) {
+                if (event.which == 32) {
+                    pause = !pause;
+                }
+            });
+            gravity();
+        });
+    </script>
+    <p>Гравитация</p>
+    <p>Click - создать точку массой 1</p>
+    <p>SpaceBar - запуск/пауза</p>
+</body>
+
+</html>
