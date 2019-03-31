@@ -1,8 +1,9 @@
+
 <!DOCTYPE html>
 <html>
 
 <head>
-    <title>Gravity</title>
+    <title>Приблизительно так работает гравитация</title>
     <meta http-equiv="content-type" content="text/html; charset=utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <script src='//yastatic.net/jquery/3.3.1/jquery.min.js' type='text/javascript'></script>
@@ -41,35 +42,61 @@
             };
             return apoint;
         };
-        function CorrectSpeed(current, x, y) {
+        function CorrectSpeed(current) {
             for (var i = 0; i < point.length; i++) {
                 if (current != i) {
-                    var direction_x = -0.01;
-                    var direction_y = -0.01;
-                    if (x > point[i]['x']) {
-                        direction_x = 0.01;
+                    var range = (((point[current]['x'] - point[i]['x']) * (point[current]['x'] - point[i]['x'])) + ((point[current]['y'] - point[i]['y']) ^ (point[current]['y'] - point[i]['y'])));
+                    range = Math.sqrt(range);
+
+                    var direction_x = -1;
+                    var direction_y = -1;
+                    if (point[current]['x'] > point[i]['x']) {
+                        direction_x = 1;
                     };
-                    if (y > point[i]['y']) {
-                        direction_y = 0.01;
+                    if (point[current]['y'] > point[i]['y']) {
+                        direction_y = 1;
                     }
-                    if (Math.round(x) == Math.round(point[i]['x'])) {
+                    if (Math.round(point[current]['x']) == Math.round(point[i]['x'])) {
                         direction_x = 0;
                     };
-                    if (Math.round(y) == Math.round(point[i]['y'])) {
+                    if (Math.round(point[current]['y']) == Math.round(point[i]['y'])) {
                         direction_y = 0;
                     }
-                    point[i]['speed_x'] += direction_x;
-                    point[i]['speed_y'] += direction_y;
-                    if ((direction_x == 0) && (direction_y == 0)) {
-                        if ((Math.abs(point[i]['speed_x']) + Math.abs(point[current]['speed_x'])) >
-                            (Math.abs(point[i]['speed_y']) + Math.abs(point[current]['speed_y']))) {
-                            point[i]['speed_x'] = -point[i]['speed_x'];
-                            point[current]['speed_x'] = -point[current]['speed_x'];
-                        } else {
-                            point[i]['speed_y'] = -point[i]['speed_y'];
-                            point[current]['speed_y'] = -point[current]['speed_y'];
-                        };
-                    };
+                    if (range > 1) {
+                        point[i]['speed_x'] += direction_x / range;
+                        point[i]['speed_y'] += direction_y / range;
+                    }
+                    if (point[i]['speed_y'] > 25) {
+                        point[i]['speed_y'] = 25;
+                    }
+                    if (point[i]['speed_x'] > 25) {
+                        point[i]['speed_x'] = 25;
+                    }
+                    if (point[i]['speed_y'] < -25) {
+                        point[i]['speed_y'] = -25;
+                    }
+                    if (point[i]['speed_x'] < -25) {
+                        point[i]['speed_x'] = -25;
+                    }
+
+                    if (range < 2) {
+
+                        if ((point[i]['speed_x'] > 0) && (point[current]['x'] < point[i]['x'])) {
+                            point[i]['speed_x'] = point[i]['speed_x'] * 0.99;
+                        }
+                        if ((point[i]['speed_x'] < 0) && (point[current]['x'] > point[i]['x'])) {
+                            point[i]['speed_x'] = point[i]['speed_x'] * 0.99;
+                        }
+
+                        if ((point[i]['speed_y'] > 0) && (point[current]['y'] < point[i]['y'])) {
+                            point[i]['speed_y'] = point[i]['speed_y'] * 0.99;
+                        }
+                        if ((point[i]['speed_y'] < 0) && (point[current]['y'] > point[i]['y'])) {
+                            point[i]['speed_y'] = point[i]['speed_y'] * 0.99;
+                        }
+
+
+                    }
 
                 };
             };
@@ -79,8 +106,8 @@
                 calculation = true;
                 if (!pause) {
                     for (var i = 0; i < point.length; i++) {
-                        CorrectSpeed(i, point[i]['x'], point[i]['y']);
-                    }; 
+                        CorrectSpeed(i);
+                    };
                     for (var i = 0; i < point.length; i++) {
                         point[i]['x'] += point[i]['speed_x'];
                         point[i]['y'] += point[i]['speed_y'];
