@@ -1,6 +1,9 @@
 # IvanShabanov.github.io
 
-EasySlider  http://ivanshabanov.github.io/easy_slides.test.html 
+EasySlider  
+
+http://ivanshabanov.github.io/easy_slides.test.html 
+
 http://ivanshabanov.github.io/easy_slides.nojquery.html 
 
 
