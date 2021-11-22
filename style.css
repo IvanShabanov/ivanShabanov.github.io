@@ -18,7 +18,7 @@ section {
     width: 100%;
     min-width: 320px;
     max-width: 1600px;
-    background-color: #bfbfbf;
+    background-color: #d5d9ff;
 }
 
 section:nth-child(2n) {
